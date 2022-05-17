@@ -10,6 +10,7 @@ client = commands.Bot(command_prefix='$')
 
 # load extensions
 client.load_extension("suggestions")
+client.load_extension("polls")
 
 @client.event
 async def on_ready():

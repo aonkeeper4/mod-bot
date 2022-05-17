@@ -1,4 +1,5 @@
 # TODO: organise (docstrings, type hinting)
+# TODO: use sqlite or something instead of replit db
 
 from discord.ext import commands
 import discord
