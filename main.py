@@ -4,6 +4,7 @@ from discord.ext import commands
 import discord
 import keep_alive
 from utils import send_embed
+import os
 
 client = commands.Bot(command_prefix='$')
 
@@ -26,4 +27,4 @@ async def on_command_error(ctx, err):
 
 keep_alive.keep_alive()
 
-client.run('ODUzOTM5MjI3NzQ2NTAwNjA4.YMcq4Q.Xjzc2uz2gjr3OwwLwlzKsHWHNUA')
+client.run(os.environ['token'])
