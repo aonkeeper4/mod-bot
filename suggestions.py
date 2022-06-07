@@ -1,5 +1,5 @@
 # TODO: organise (docstrings, type hinting)
-# TODO: use sqlite or something instead of replit db
+# TODO: use sql database instead of replit db
 
 from discord.ext import commands
 import discord
@@ -51,7 +51,7 @@ class Suggestion: # yes
         args = [arg.strip() for arg in string[11:-1].split(',')]
         args[2] = datetime.strptime(args[2], '%d/%m/%Y %H:%M:%S') if args[2] > '' else datetime.now().strftime("%d/%m/%Y %H:%M:%S") # gets created_at from string. this was painful
         args[5] = args[5].split(':')
-        return Suggestion(*args) # woo list unpacking get it gurl *flips hair yassifiedly*
+        return Suggestion(*args) # woo list unpacking
 
     def __contains__(self, other): # for search feature
         return (other in self.title) or (other == self.id) or (other in self.body)
@@ -153,8 +153,8 @@ class SuggestionsCog(commands.Cog): # cog to hold all suggestions-related comman
                 suggestion_strs.append(suggestion_str)
             current_page = 0
         async def setup_msg(ctx, current_page, msg=None):
-            emoji_list = ['◀']*(current_page>0) + ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣'][:len(suggestion_pages[current_page])] + ['▶']*(current_page<len(suggestion_pages)-1) # gets emojis for menu. i should probably use unicode strings also nested ternaries and list magic ahahahahah pain
-            msg = await send_embed(ctx, f'Suggestions - {filter_str} ({len(all_suggestions)} results)', f'```{suggestion_strs[current_page]}```', discord.Colour.gold(), True, f'Page {current_page+1}/{len(suggestion_pages)}'+'\u3000'*30, edit=msg) # actually display the fucking page
+            emoji_list = ['◀']*(current_page>0) + ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣'][:len(suggestion_pages[current_page])] + ['▶']*(current_page<len(suggestion_pages)-1) # gets emojis for menu
+            msg = await send_embed(ctx, f'Suggestions - {filter_str} ({len(all_suggestions)} results)', f'```{suggestion_strs[current_page]}```', discord.Colour.gold(), True, f'Page {current_page+1}/{len(suggestion_pages)}'+'\u3000'*30, edit=msg) # actually display the page
             for emoji in emoji_list: # add menu
                 await msg.add_reaction(emoji)
             return msg, emoji_list
