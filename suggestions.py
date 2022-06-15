@@ -1,5 +1,6 @@
 # TODO: organise (docstrings, type hinting)
 # TODO: use sql database instead of replit db
+# link to access google cloud (for database) (nO UseRs UndEr 18) https://console.cloud.google.com/freetrial/signup/tos?authuser=1&pli=1
 
 from discord.ext import commands
 import discord
