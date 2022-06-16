@@ -12,19 +12,26 @@ client = commands.Bot(command_prefix='$')
 client.load_extension("suggestions")
 client.load_extension("polls")
 
+
 @client.event
 async def on_ready():
     print('Bot is ready!')
 
+
 @client.event
 async def on_command_error(ctx, err):
     if isinstance(err, commands.errors.MissingRequiredArgument):
-        await send_embed(ctx, 'Error', 'Error - missing required argument in command', discord.Colour.red())
+        await send_embed(ctx, 'Error',
+                         'Error - missing required argument in command',
+                         discord.Colour.red())
     elif isinstance(err, commands.errors.CommandNotFound):
         command_name = str(err)[9:-14]
-        await send_embed(ctx, 'Error', f'Error - unrecognised command: {command_name}', discord.Colour.red())
+        await send_embed(ctx, 'Error',
+                         f'Error - unrecognised command: {command_name}',
+                         discord.Colour.red())
     else:
         raise err
+
 
 keep_alive.keep_alive()
 

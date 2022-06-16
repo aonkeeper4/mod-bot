@@ -10,8 +10,6 @@ from threading import Thread
 
 POLLS_CHANNEL = "polls"
 
-class PollEndException(Exception):
-    pass
 
 class PollVote:
     def __init__(self, user_id, value):
@@ -24,6 +22,7 @@ class PollVote:
     def __repr__(self):
         return self.__str__()
 
+
 class Poll:
     def __init__(self, name, options, end_time):
         self.name = name
@@ -33,20 +32,19 @@ class Poll:
         self.file = f"polls/poll_{self.name}.csv"
 
     def save(self):
-        with open(self.file, "w", newline="") as f: # save votes
+        with open(self.file, "w", newline="") as f:  # save votes
             writer = csv.writer(self.file)
             for vote in self.votes:
                 writer.writerow(str(vote))
 
-        with open("polls/polls.csv", "w", newline="") as f: # save self
+        with open("polls/polls.csv", "w", newline="") as f:  # save self
             writer = csv.writer(self.file)
             writer.writerow(str(self))
-            
-                
+
     def load(self):
         with open(self.file, "r") as f:
             reader = csv.reader(self.file)
-            next(reader) # skip header
+            next(reader)  # skip header
             for row in reader:
                 self.votes.append(PollVote(*row))
 
@@ -59,7 +57,7 @@ class Poll:
         while True:
             if datetime.now() > self.end_time:
                 return
-            
+
     def start(self):
         run_thread = Thread(target=self.run)
         run_thread.start()
@@ -69,17 +67,19 @@ class Poll:
         options_str = ":".join(self.options)
         return f"{self.name},{options_str},{endtime_f}"
 
+
 def setup_polls():
     # csv is not cooperating sadge
     polls = []
     with open("polls/polls.csv", "r") as f:
         polls_reader = csv.reader("polls/polls.csv")
-        next(polls_reader) # skip header
+        next(polls_reader)  # skip header
         for row in polls_reader:
             print(row)
             polls.append(Poll(*row))
 
     return polls
+
 
 class PollsCog(commands.Cog):
     def __init__(self, bot):
@@ -89,11 +89,11 @@ class PollsCog(commands.Cog):
     async def vote(ctx):
         pass
         # do it
-        
+
 
 # extension setup code
 def setup(bot):
     bot.add_cog(PollsCog(bot))
-    polls = [] # setup_polls()
+    polls = []  # setup_polls() isnt working
     for poll in polls:
         poll.start()
